@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TabBar图标生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .icon-row {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+        .icon-preview {
+            font-size: 48px;
+            margin-right: 20px;
+        }
+        .canvas-container {
+            display: flex;
+            gap: 20px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        button {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0051d5;
+        }
+        .instructions {
+            background: #e8f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007aff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TabBar图标生成器</h1>
+
+        <div class="instructions">
+            <strong>使用说明：</strong><br>
+            1. 点击"生成图标"按钮，会在下方显示生成的图标<br>
+            2. 右键点击图标，选择"图片另存为"<br>
+            3. 保存到 static/ 目录，命名为对应的名字（如 home.png, home_active.png）<br>
+            4. 所有图标都生成后，刷新HBuilderX重新运行项目
+        </div>
+
+        <button onclick="generateAllIcons()">生成所有图标</button>
+
+        <div id="icons"></div>
+    </div>
+
+    <script>
+        const icons = [
+            { name: 'home', emoji: '🏠', label: '首页' },
+            { name: 'control', emoji: '🎛️', label: '控制' },
+            { name: 'chat', emoji: '🎤', label: '语音' },
+            { name: 'scene', emoji: '📋', label: '场景' },
+            { name: 'mine', emoji: '👤', label: '我的' }
+        ];
+
+        function createIconCanvas(emoji, isActive) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 48;
+            canvas.height = 48;
+            const ctx = canvas.getContext('2d');
+
+            // 清空背景（透明）
+            ctx.clearRect(0, 0, 48, 48);
+
+            // 绘制emoji
+            ctx.font = '32px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // 如果是激活状态，可以添加一点效果
+            if (isActive) {
+                ctx.fillStyle = '#007aff';
+                ctx.globalAlpha = 0.1;
+                ctx.beginPath();
+                ctx.arc(24, 24, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+
+            ctx.fillText(emoji, 24, 24);
+
+            return canvas;
+        }
+
+        function generateAllIcons() {
+            const container = document.getElementById('icons');
+            container.innerHTML = '';
+
+            icons.forEach(icon => {
+                const row = document.createElement('div');
+                row.className = 'icon-row';
+
+                const preview = document.createElement('div');
+                preview.className = 'icon-preview';
+                preview.textContent = icon.emoji;
+
+                const info = document.createElement('div');
+                info.innerHTML = `<strong>${icon.label}</strong> (${icon.name})`;
+
+                const canvasContainer = document.createElement('div');
+                canvasContainer.className = 'canvas-container';
+
+                // 普通状态
+                const canvas1 = createIconCanvas(icon.emoji, false);
+                canvas1.title = `${icon.name}.png`;
+                const wrapper1 = document.createElement('div');
+                wrapper1.innerHTML = `<div style="text-align:center;margin-bottom:5px;">${icon.name}.png</div>`;
+                wrapper1.appendChild(canvas1);
+
+                // 激活状态
+                const canvas2 = createIconCanvas(icon.emoji, true);
+                canvas2.title = `${icon.name}_active.png`;
+                const wrapper2 = document.createElement('div');
+                wrapper2.innerHTML = `<div style="text-align:center;margin-bottom:5px;">${icon.name}_active.png</div>`;
+                wrapper2.appendChild(canvas2);
+
+                canvasContainer.appendChild(wrapper1);
+                canvasContainer.appendChild(wrapper2);
+
+                const button = document.createElement('button');
+                button.textContent = '下载';
+                button.onclick = () => downloadIcon(icon);
+
+                row.appendChild(preview);
+                row.appendChild(info);
+                row.appendChild(canvasContainer);
+                row.appendChild(button);
+
+                container.appendChild(row);
+            });
+        }
+
+        function downloadIcon(icon) {
+            ['png', 'active.png'].forEach(suffix => {
+                const isActive = suffix.includes('active');
+                const canvas = createIconCanvas(icon.emoji, isActive);
+                const filename = `${icon.name}${suffix ? '_' + suffix : ''}.png`;
+
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+            });
+        }
+
+        // 页面加载时自动生成
+        window.onload = generateAllIcons;
+    </script>
+</body>
+</html>

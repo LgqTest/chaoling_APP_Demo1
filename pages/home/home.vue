@@ -21,22 +21,22 @@
 		</view>
 		
 		<view class="section-title">快速场景</view>
-		<view class="grid">
-			<view class="grid-item card">
-				<text class="icon">🍳</text>
-				<text class="grid-label">备菜模式</text>
+		<view class="quick-scenes">
+			<view class="scene-item card">
+				<text class="scene-icon">🍳</text>
+				<text class="scene-label">备菜模式</text>
 			</view>
-			<view class="grid-item card">
-				<text class="icon">🥘</text>
-				<text class="grid-label">爆炒模式</text>
+			<view class="scene-item card">
+				<text class="scene-icon">🥘</text>
+				<text class="scene-label">爆炒模式</text>
 			</view>
-			<view class="grid-item card">
-				<text class="icon">💨</text>
-				<text class="grid-label">强力通风</text>
+			<view class="scene-item card">
+				<text class="scene-icon">💨</text>
+				<text class="scene-label">强力通风</text>
 			</view>
-			<view class="grid-item card">
-				<text class="icon">🌙</text>
-				<text class="grid-label">夜间模式</text>
+			<view class="scene-item card">
+				<text class="scene-icon">🌙</text>
+				<text class="scene-label">夜间模式</text>
 			</view>
 		</view>
 		
@@ -115,25 +115,28 @@
 		margin: 20px 0 10px;
 		color: #333;
 	}
-	.grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+	.quick-scenes {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 12px;
+		margin-bottom: 10px;
 	}
-	.grid-item {
-		width: 42%; /* slightly less than half to account for padding/margin */
+	.scene-item {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 15px;
+		justify-content: center;
+		padding: 20px 15px;
+		min-height: 100px;
 	}
-	.grid-item .icon {
-		font-size: 28px;
-		margin-bottom: 10px;
+	.scene-icon {
+		font-size: 32px;
+		margin-bottom: 8px;
 	}
-	.grid-label {
+	.scene-label {
 		font-size: 14px;
 		color: #333;
+		font-weight: 500;
 	}
 	.device-card {
 		display: flex;

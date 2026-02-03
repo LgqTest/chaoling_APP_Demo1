@@ -65,96 +65,121 @@
 			initBaiduToken() {
 				// 获取Baidu Token (实际开发建议在App启动时获取并缓存)
 				// 这里为了Demo演示，每次加载页面检查一下
+				console.log('检查API Key配置:', {
+					baiduKey: config.baidu.apiKey ? '已配置' : '未配置',
+					moonshotKey: config.moonshot.apiKey ? '已配置' : '未配置'
+				});
+
 				if(config.baidu.apiKey === 'YOUR_BAIDU_API_KEY') {
 					this.appendSystemMsg("请在 common/config.js 中配置百度API Key");
 					return;
 				}
-				
+
 				getBaiduToken().then(token => {
 					this.baiduToken = token;
-					console.log('Baidu Token acquired');
+					console.log('百度Token获取成功');
+					this.appendSystemMsg("语音服务已就绪");
 				}).catch(err => {
-					console.error('Token Error', err);
+					console.error('Token获取失败:', err);
 					this.appendSystemMsg("百度语音Token获取失败，请检查网络或Key配置");
 				});
 			},
-			
+
 			setupRecorder() {
 				recorderManager.onStart(() => {
-					console.log('recorder start');
+					console.log('录音开始');
 					this.isRecording = true;
 					this.statusText = '松开结束';
 				});
-				
+
 				recorderManager.onStop((res) => {
-					console.log('recorder stop', res);
+					console.log('录音停止，文件路径:', res.tempFilePath);
+					console.log('录音时长:', res.duration + 'ms');
+					console.log('文件大小:', res.fileSize + 'bytes');
 					this.isRecording = false;
 					this.statusText = '按住说话';
 					this.handleRecording(res.tempFilePath);
 				});
-				
+
 				recorderManager.onError((err) => {
-					console.error('recorder error', err);
+					console.error('录音错误:', err);
 					this.isRecording = false;
 					this.statusText = '按住说话';
-					this.appendSystemMsg("录音失败: " + err.errMsg);
+					this.appendSystemMsg("录音失败: " + (err.errMsg || JSON.stringify(err)));
 				});
 			},
-			
-			startRecord() {
-				// 权限检查在APP端通常由manifest配置，实际运行时OS会询问
-				console.log('Start recording...');
-				recorderManager.start({
+
+			startRecord(e) {
+				console.log('开始录音按钮被点击');
+				e && e.preventDefault && e.preventDefault();
+
+				// 检查录音权限
+				uni.getRecorderManager().start({
 					duration: 60000,
-					format: 'aac' // Use aac for better compatibility with Baidu m4a
+					format: 'mp3', // 改为mp3格式，兼容性更好
+					numberOfChannels: 1,
+					sampleRate: 16000,
+					encodeBitRate: 48000
 				});
+				console.log('录音请求已发送');
 			},
-			
-			stopRecord() {
-				console.log('Stop recording...');
-				recorderManager.stop();
+
+			stopRecord(e) {
+				console.log('停止录音按钮被点击');
+				e && e.preventDefault && e.preventDefault();
+				uni.getRecorderManager().stop();
+				console.log('停止录音请求已发送');
 			},
 			
 			handleRecording(tempFilePath) {
 				if (!this.baiduToken) {
-					this.appendSystemMsg("语音服务未就绪");
+					this.appendSystemMsg("语音服务未就绪，请等待Token加载");
+					console.error('百度Token未获取');
 					return;
 				}
-				
+
 				this.isProcessing = true;
-				
+				this.appendSystemMsg("正在识别语音...");
+
 				// Read file as Base64
 				const fsm = uni.getFileSystemManager();
+				console.log('开始读取录音文件:', tempFilePath);
+
 				fsm.readFile({
 					filePath: tempFilePath,
 					encoding: 'base64',
 					success: (res) => {
+						console.log('录音文件读取成功，大小:', res.data.length);
 						this.processSpeech(res.data);
 					},
 					fail: (err) => {
-						console.error('Read file fail', err);
+						console.error('读取录音文件失败:', err);
 						this.isProcessing = false;
-						this.appendSystemMsg("读取录音文件失败");
+						this.appendSystemMsg("读取录音文件失败: " + JSON.stringify(err));
 					}
 				});
 			},
 			
 			processSpeech(base64Data) {
+				console.log('开始语音识别，数据长度:', base64Data.length);
+
 				recognizeSpeech(base64Data, this.baiduToken).then(res => {
-					console.log('ASR Result:', res);
+					console.log('语音识别结果:', res);
 					// result is usually an array of strings
 					const text = res; // recognizeSpeech wrapper should return the string
 					if(text) {
+						// 移除"正在识别语音..."的提示消息
+						this.messages = this.messages.filter(m => !m.content.includes('正在识别语音'));
 						this.addMessage('user', text);
 						this.callLLM();
 					} else {
-						this.appendSystemMsg("未识别到语音");
+						this.appendSystemMsg("未识别到语音，请重试");
 						this.isProcessing = false;
 					}
 				}).catch(err => {
-					console.error('ASR Error', err);
+					console.error('语音识别失败:', err);
 					this.isProcessing = false;
-					this.appendSystemMsg("语音识别失败");
+					this.appendSystemMsg("语音识别失败: " + JSON.stringify(err));
 				});
 			},
 			

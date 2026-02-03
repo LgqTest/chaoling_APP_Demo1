@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
 		<view class="title">设备管理</view>
-		
+
 		<view class="category-tabs">
 			<text class="tab active">厨房</text>
 			<text class="tab">客厅</text>
 			<text class="tab">餐厅</text>
 		</view>
-		
+
 		<view class="device-grid">
 			<view class="device-item card" v-for="(item, index) in devices" :key="index">
 				<view class="device-header">
@@ -46,47 +46,64 @@
 </script>
 
 <style>
+	.title {
+		font-size: 20px;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 15px;
+	}
 	.category-tabs {
 		display: flex;
 		margin-bottom: 20px;
+		gap: 20px;
 	}
 	.tab {
-		margin-right: 20px;
-		font-size: 16px;
+		font-size: 15px;
 		color: #888;
-		padding-bottom: 5px;
+		padding-bottom: 8px;
+		position: relative;
 	}
 	.tab.active {
-		color: #333;
+		color: #007aff;
 		font-weight: bold;
-		border-bottom: 2px solid #007aff;
+	}
+	.tab.active::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: #007aff;
+		border-radius: 2px;
 	}
 	.device-grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 12px;
 	}
 	.device-item {
-		width: 42%;
 		padding: 15px;
+		min-height: 110px;
 	}
 	.device-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 10px;
+		margin-bottom: 12px;
 	}
 	.device-icon {
-		font-size: 24px;
+		font-size: 28px;
 	}
 	.device-name {
 		font-size: 15px;
 		font-weight: bold;
 		display: block;
-		margin-bottom: 5px;
+		margin-bottom: 6px;
+		color: #333;
 	}
 	.device-state {
-		font-size: 12px;
+		font-size: 13px;
 		color: #888;
 	}
 </style>

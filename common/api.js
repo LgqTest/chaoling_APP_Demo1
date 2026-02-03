@@ -31,35 +31,36 @@ export const getBaiduToken = () => {
 // 百度语音识别
 export const recognizeSpeech = (base64Audio, token) => {
 	return new Promise((resolve, reject) => {
-		// PCM-16bit, 16000Hz is standard for Baidu
-		// If using m4a/mp3 from UniApp recorder, might need dev_pid 1537 (Mandarin) or 1737 (English)
-		// Standard Android recorder often gives m4a or mp3.
-		// For simplicity, we assume the recorder is configured to produce suitable output or we use the format param.
-		
+		console.log('发送语音识别请求到百度API');
+
 		uni.request({
 			url: config.baidu.recognitionUrl,
 			method: 'POST',
 			data: {
-				format: 'm4a', // Matched with recorder
+				format: 'mp3', // 改为mp3格式，与录音器配置一致
 				rate: 16000,
 				channel: 1,
 				cuid: 'uni-app-user-' + Math.random().toString(36).substr(2),
 				token: token,
 				speech: base64Audio,
 				len: base64Audio.length,
-				dev_pid: 1537 // 普通话
+				dev_pid: 1537 // 普通话(支持mp3格式)
 			},
 			header: {
 				'Content-Type': 'application/json'
 			},
 			success: (res) => {
+				console.log('百度API响应:', res.data);
 				if (res.data.err_no === 0) {
+					console.log('识别成功:', res.data.result);
 					resolve(res.data.result[0]);
 				} else {
+					console.error('百度API错误码:', res.data.err_no, '错误信息:', res.data.err_msg);
 					reject(res.data);
 				}
 			},
 			fail: (err) => {
+				console.error('网络请求失败:', err);
 				reject(err);
 			}
 		});
