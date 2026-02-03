@@ -1259,9 +1259,16 @@ var render = function () {
                         attrs: { _i: "6-" + $30 },
                       },
                       [
-                        _c("v-uni-text", { attrs: { _i: "7-" + $30 } }, [
-                          _vm._v(_vm._$g("7-" + $30, "t0-0")),
-                        ]),
+                        _vm._$g("7-" + $30, "i")
+                          ? _c("v-uni-rich-text", {
+                              attrs: {
+                                nodes: _vm._$g("7-" + $30, "a-nodes"),
+                                _i: "7-" + $30,
+                              },
+                            })
+                          : _c("v-uni-text", { attrs: { _i: "8-" + $30 } }, [
+                              _vm._v(_vm._$g("8-" + $30, "t0-0")),
+                            ]),
                       ],
                       1
                     ),
@@ -1272,20 +1279,20 @@ var render = function () {
               1
             )
           }),
-          _vm._$g(8, "i")
+          _vm._$g(9, "i")
             ? _c(
                 "uni-view",
-                { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+                { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
                 [
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                    { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
                     [
                       _c(
                         "uni-view",
-                        { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
+                        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
                         [
-                          _c("v-uni-text", { attrs: { _i: 11 } }, [
+                          _c("v-uni-text", { attrs: { _i: 12 } }, [
                             _vm._v("🤖"),
                           ]),
                         ],
@@ -1293,9 +1300,9 @@ var render = function () {
                       ),
                       _c(
                         "uni-view",
-                        { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
                         [
-                          _c("v-uni-text", { attrs: { _i: 13 } }, [
+                          _c("v-uni-text", { attrs: { _i: 14 } }, [
                             _vm._v("正在思考..."),
                           ]),
                         ],
@@ -1309,22 +1316,22 @@ var render = function () {
               )
             : _vm._e(),
           _c("uni-view", {
-            staticStyle: { height: "100px" },
-            attrs: { _i: 14 },
+            staticStyle: { height: "70px" },
+            attrs: { _i: 15 },
           }),
         ],
         2
       ),
       _c(
         "uni-view",
-        { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+        { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
         [
           _c(
             "uni-view",
             {
-              staticClass: _vm._$g(16, "sc"),
-              class: _vm._$g(16, "c"),
-              attrs: { _i: 16 },
+              staticClass: _vm._$g(17, "sc"),
+              class: _vm._$g(17, "c"),
+              attrs: { _i: 17 },
               on: {
                 touchstart: function ($event) {
                   return _vm.$handleViewEvent($event)
@@ -1343,12 +1350,50 @@ var render = function () {
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
                 [_vm._v("🎤")]
               ),
-              _c("v-uni-text", { attrs: { _i: 18 } }, [
-                _vm._v(_vm._$g(18, "t0-0")),
-              ]),
+            ],
+            1
+          ),
+          _c(
+            "uni-view",
+            { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+            [
+              _c("v-uni-input", {
+                staticClass: _vm._$g(20, "sc"),
+                attrs: {
+                  type: "text",
+                  placeholder: "输入消息...",
+                  "confirm-type": "send",
+                  _i: 20,
+                },
+                on: {
+                  confirm: function ($event) {
+                    return _vm.$handleViewEvent($event)
+                  },
+                },
+                model: {
+                  value: _vm._$g(20, "v-model"),
+                  callback: function ($$v) {
+                    _vm.$handleVModelEvent(20, $$v)
+                  },
+                  expression: "inputText",
+                },
+              }),
+              _c(
+                "v-uni-button",
+                {
+                  staticClass: _vm._$g(21, "sc"),
+                  attrs: { disabled: _vm._$g(21, "a-disabled"), _i: 21 },
+                  on: {
+                    click: function ($event) {
+                      return _vm.$handleViewEvent($event)
+                    },
+                  },
+                },
+                [_vm._v("发送")]
+              ),
             ],
             1
           ),
@@ -1453,7 +1498,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX.4.87.2025121004/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.chat-container {\n\theight: 100vh;\n\tdisplay: flex;\n\tflex-direction: column;\n\tbackground-color: #f5f5f5;\n\tpadding: 0;\n}\n.msg-list {\n\tflex: 1;\n\tpadding: 15px;\n\tbox-sizing: border-box;\n}\n.msg-item {\n\tmargin-bottom: 20px;\n}\n.msg-content {\n\tdisplay: flex;\n\talign-items: flex-start;\n}\n.user-msg {\n\tflex-direction: row-reverse;\n}\n.avatar {\n\twidth: 40px;\n\theight: 40px;\n\tborder-radius: 20px;\n\tbackground: #ddd;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\tfont-size: 20px;\n\tflex-shrink: 0;\n}\n.user-msg .avatar {\n\tmargin-left: 10px;\n\tbackground: #007aff;\n}\n.ai-msg .avatar {\n\tmargin-right: 10px;\n\tbackground: white;\n}\n.bubble {\n\tmax-width: 70%;\n\tpadding: 10px 15px;\n\tborder-radius: 12px;\n\tfont-size: 16px;\n\tline-height: 1.5;\n\tword-break: break-all;\n}\n.user-msg .bubble {\n\tbackground: #007aff;\n\tcolor: white;\n\tborder-top-right-radius: 2px;\n}\n.ai-msg .bubble {\n\tbackground: white;\n\tcolor: #333;\n\tborder-top-left-radius: 2px;\n\tbox-shadow: 0 1px 3px rgba(0,0,0,0.1);\n}\n.processing {\n\tcolor: #888;\n\tfont-style: italic;\n}\n.bottom-bar {\n\tposition: fixed;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\theight: 80px; /* height + padding */\n\tbackground: white;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\tbox-shadow: 0 -2px 10px rgba(0,0,0,0.05);\n}\n.record-btn {\n\twidth: 80%;\n\theight: 50px;\n\tbackground: #007aff;\n\tcolor: white;\n\tborder-radius: 25px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\tfont-size: 18px;\n\tfont-weight: bold;\n\ttransition: all 0.2s;\n}\n.record-btn.recording {\n\tbackground: #ff3b30;\n\t-webkit-transform: scale(0.95);\n\t        transform: scale(0.95);\n}\n.mic-icon {\n\tmargin-right: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.chat-container {\n\theight: 100vh;\n\tdisplay: flex;\n\tflex-direction: column;\n\tbackground-color: #f5f5f5;\n\tpadding: 0;\n}\n.msg-list {\n\tflex: 1;\n\tpadding: 15px;\n\tbox-sizing: border-box;\n}\n.msg-item {\n\tmargin-bottom: 20px;\n}\n.msg-content {\n\tdisplay: flex;\n\talign-items: flex-start;\n}\n.user-msg {\n\tflex-direction: row-reverse;\n}\n.avatar {\n\twidth: 40px;\n\theight: 40px;\n\tborder-radius: 20px;\n\tbackground: #ddd;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\tfont-size: 20px;\n\tflex-shrink: 0;\n}\n.user-msg .avatar {\n\tmargin-left: 10px;\n\tbackground: #007aff;\n}\n.ai-msg .avatar {\n\tmargin-right: 10px;\n\tbackground: white;\n}\n.bubble {\n\tmax-width: 70%;\n\tpadding: 10px 15px;\n\tborder-radius: 12px;\n\tfont-size: 16px;\n\tline-height: 1.5;\n\tword-break: break-all;\n}\n.user-msg .bubble {\n\tbackground: #007aff;\n\tcolor: white;\n\tborder-top-right-radius: 2px;\n}\n.ai-msg .bubble {\n\tbackground: white;\n\tcolor: #333;\n\tborder-top-left-radius: 2px;\n\tbox-shadow: 0 1px 3px rgba(0,0,0,0.1);\n\toverflow: hidden;\n}\n\n/* rich-text 样式优化 */\n.ai-msg .bubble uni-rich-text {\n\twidth: 100%;\n\tword-break: break-word;\n}\n.ai-msg .bubble uni-rich-text p {\n\tmargin: 5px 0;\n\tline-height: 1.6;\n}\n.processing {\n\tcolor: #888;\n\tfont-style: italic;\n}\n.bottom-bar {\n\tposition: fixed;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\tpadding: 10px 15px;\n\tbackground: white;\n\tdisplay: flex;\n\talign-items: center;\n\tgap: 10px;\n\tbox-shadow: 0 -2px 10px rgba(0,0,0,0.05);\n}\n.input-container {\n\tdisplay: flex;\n\tgap: 10px;\n\tflex: 1;\n}\n.text-input {\n\tflex: 1;\n\theight: 40px;\n\tpadding: 0 15px;\n\tborder: 1px solid #ddd;\n\tborder-radius: 20px;\n\tfont-size: 16px;\n\tbackground: #f5f5f5;\n}\n.send-btn {\n\twidth: 65px;\n\theight: 40px;\n\tbackground: #007aff;\n\tcolor: white;\n\tborder: none;\n\tborder-radius: 20px;\n\tfont-size: 15px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.send-btn[disabled] {\n\tbackground: #ccc;\n}\n.record-btn {\n\twidth: 44px;\n\theight: 44px;\n\tbackground: #007aff;\n\tcolor: white;\n\tborder-radius: 22px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\tfont-size: 20px;\n\ttransition: all 0.2s;\n\tflex-shrink: 0;\n}\n.record-btn.recording {\n\tbackground: #ff3b30;\n\t-webkit-transform: scale(0.95);\n\t        transform: scale(0.95);\n}\n.mic-icon {\n\tmargin-right: 10px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

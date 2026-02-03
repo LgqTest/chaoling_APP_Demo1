@@ -16,7 +16,10 @@
             "delay" : 0
         },
         "modules" : {
-            "Audio" : {}
+            "Audio" : {},
+            "Barcode" : {},
+            "Record" : {},
+            "SQLite" : {}
         },
         "distribute" : {
             "android" : {
@@ -42,7 +45,9 @@
                     "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>"
                 ]
             },
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             "sdkConfigs" : {
                 "ad" : {}
             }
