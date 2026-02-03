@@ -1,0 +1,78 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "厨电助手"
+			}
+		},
+		{
+			"path": "pages/chat/chat",
+			"style": {
+				"navigationBarTitleText": "智能对话"
+			}
+		},
+		{
+			"path": "pages/control/control",
+			"style": {
+				"navigationBarTitleText": "设备控制"
+			}
+		},
+		{
+			"path": "pages/scene/scene",
+			"style": {
+				"navigationBarTitleText": "智能场景"
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "厨电助手",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#f8f8f8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/home_active.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/control/control",
+				"iconPath": "static/control.png",
+				"selectedIconPath": "static/control_active.png",
+				"text": "控制"
+			},
+			{
+				"pagePath": "pages/chat/chat",
+				"iconPath": "static/chat.png",
+				"selectedIconPath": "static/chat_active.png",
+				"text": "语音"
+			},
+			{
+				"pagePath": "pages/scene/scene",
+				"iconPath": "static/scene.png",
+				"selectedIconPath": "static/scene_active.png",
+				"text": "场景"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/mine.png",
+				"selectedIconPath": "static/mine_active.png",
+				"text": "我的"
+			}
+		]
+	}
+}
